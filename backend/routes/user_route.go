@@ -5,6 +5,8 @@ import (
 	_ "io"
 	"net/http"
 
+	functions "github.com/BR7T/BookShelf/functions/user"
+	"github.com/BR7T/BookShelf/models"
 	"github.com/BR7T/BookShelf/service"
 	"github.com/BR7T/BookShelf/utils"
 	"github.com/gorilla/mux"
@@ -21,7 +23,7 @@ func setupUserRoutes(router *mux.Router){
 
 func getUsersHandle(w http.ResponseWriter , r *http.Request){
 	fmt.Print("Buscando Usuários")
-	users , err := service.GetAllUsers()
+	users , err := functions.GetAllUsers()
 	if err != nil{
 		fmt.Fprint(w, err)
 	}
@@ -30,7 +32,7 @@ func getUsersHandle(w http.ResponseWriter , r *http.Request){
 }
 
 func addUserHandle(w http.ResponseWriter , r *http.Request){
-	var user service.UserRegister
+	var user models.UserRegister
 	err := utils.ParseJsonBody(w,r, &user)
 	if err != nil{
 		fmt.Fprint(w,err)
@@ -39,7 +41,7 @@ func addUserHandle(w http.ResponseWriter , r *http.Request){
 }
 
 func loginUserHandle(w http.ResponseWriter , r *http.Request){
-	var login service.UserLogin
+	var login models.UserLogin
 	err := utils.ParseJsonBody(w,r, &login)
 	if err != nil{
 		fmt.Fprint(w,err)
