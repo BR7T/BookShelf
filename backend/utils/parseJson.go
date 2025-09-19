@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-func ParseJsonBody(w http.ResponseWriter, r *http.Request , dst interface{})error{
+func ParseJsonBody(w http.ResponseWriter, r *http.Request , dst any)error{
 	content := r.Header.Get("Content-Type")
 	// Verify type json
 	if content != "application/json"{
@@ -20,6 +20,7 @@ func ParseJsonBody(w http.ResponseWriter, r *http.Request , dst interface{})erro
 
 	err := decoder.Decode(dst)
 	if err != nil {
+		fmt.Print(err , "\n")
         return err
     }
 	return nil

@@ -1,20 +1,13 @@
-package service
+package functions
 
 import (
 	"fmt"
-	"time"
 
 	"github.com/BR7T/BookShelf/config"
+	"github.com/BR7T/BookShelf/models"
 )
 
-type User struct {
-    ID        int64
-    Name      string
-    Email     string
-    CreatedAt time.Time
-}
-
-func GetAllUsers()([]User , error){
+func GetAllUsers()([]models.User , error){
 	db := config.SetupDB()
 	// search all users
 	rows , err := db.Query("SELECT iduser , username , email , createdAt FROM users")
@@ -22,10 +15,10 @@ func GetAllUsers()([]User , error){
 		return nil , fmt.Errorf("failed to search users %w" , err)
 	}
 
-	var users []User
+	var users []models.User
 
 	for rows.Next() {
-		var user User
+		var user models.User
 		err := rows.Scan(&user.ID , &user.Name , &user.Email , &user.CreatedAt)
 		if err != nil{
 			return nil , fmt.Errorf("failed to search users %w" , err)
